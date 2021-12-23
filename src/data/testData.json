@@ -1,0 +1,20 @@
+[
+  {
+    "fName": "Electric",
+    "currGenEq": 0,
+    "genVal1": 0,
+    "genVal2": 0,
+    "genVal3": 0,
+    "genVal4": 0,
+    "reactVal1": 0
+  },
+  {
+    "fName": "Magnetic",
+    "currGenEq": 0,
+    "genVal1": 0,
+    "genVal2": 0,
+    "genVal3": 0,
+    "genVal4": 0,
+    "reactVal1": 0
+  }
+]

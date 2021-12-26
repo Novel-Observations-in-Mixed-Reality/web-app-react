@@ -2,8 +2,6 @@ import React, { useState } from 'react';
 import { InputGroup, FormControl, Form, Container, Row, Col, Card, Accordion, DropdownButton, Dropdown, Button } from 'react-bootstrap';
 import '../index.css';
 
-import testData from '../data/testData.json';
-
 const eqs = ['q (a r^b + c)', 'a q log_b(cr + d)', 'a q v'];
 const data = [
   { "fieldName": "Magnetic", "currGenEq": 0, "genVal1": 1, "genVal2": 0, "genVal3": 0, "genVal4": 0, "reactVal1": 0 },
@@ -15,24 +13,23 @@ const data = [
 
 export default function FieldCard({ initData, cardNumber }) {
 
-
-  const [fieldData, updateFD] = useState(data);
+  const [fieldData, updateFD] = useState(initData.fieldData);
 
   const [index, updateIndex] = useState(0);
-  // console.log(initData);
-  console.log(fieldData)
+  console.log(index);
+  //console.log(fieldData)
 
   //console.log(testData)
 
   const handleEq = (value) => {
-    let temp = data.slice();
+    let temp = fieldData.slice();
+    console.log(temp)
     temp[index].currGenEq = eqs.indexOf(value);
     updateFD(temp);
   };
 
   const handleToggle = (event) => {
-    console.log(event.target.dataset.index)
-    console.log(fieldData)
+    // console.log(fieldData)
     updateIndex(event.target.dataset.index);
   };
 
@@ -46,11 +43,8 @@ export default function FieldCard({ initData, cardNumber }) {
     // console.log(field)
     return (
       <Accordion.Item eventKey={index.toString()}>
-        {/* <Accordion.Header bsPrefix='' index={index} onClick={(event) => console.log(event.target)}>
+        <Accordion.Button className='h6 mb-0' data-index={index} onClick={handleToggle}>
           {field.fieldName + ' Field'}
-        </Accordion.Header> */}
-        <Accordion.Button data-index={index} onClick={handleToggle}>
-          <h6 className='mb-0'>{field.fieldName + ' Field'}</h6>
         </Accordion.Button>
         <Accordion.Body>
           <DropdownButton className="mb-2 gen-dd" title={'E = ' + eqs[field.currGenEq]} onSelect={handleEq}>
@@ -70,7 +64,7 @@ export default function FieldCard({ initData, cardNumber }) {
   return (
     <Card border="secondary" style={{ width: 'auto' }} className="mb-3">
       <Card.Body>
-        <Card.Title>Positive Charge</Card.Title>
+        <Card.Title>{initData.particle}</Card.Title>
 
         <Form>
           {/*

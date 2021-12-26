@@ -3,6 +3,8 @@ import React from 'react';
 import FieldCard from './FieldCard';
 import { Container, Row, Col } from 'react-bootstrap';
 
+import testData from '../data/testData.json';
+
 const data = [
   { "fieldName": "Magnetic", "currGenEq": 0, "genVal1": 1, "genVal2": 0, "genVal3": 0, "genVal4": 0, "reactVal1": 0 },
   { "fieldName": "Electric", "currGenEq": 1, "genVal1": 0, "genVal2": 0, "genVal3": 0, "genVal4": 0, "reactVal1": 0 },
@@ -21,10 +23,10 @@ function App({ initialData }) {
         <Row >
 
           <Col md={6} lg={4}>
-            <FieldCard initData={data} cardNumber={1}/>
+            <FieldCard initData={testData[0]} cardNumber={0}/>
           </Col>
           <Col md={6} lg={4}>
-            <FieldCard initData={data} cardNumber={2}/>
+            <FieldCard initData={testData[1]} cardNumber={1}/>
           {/* </Col>
           <Col md={6} lg={4}>
             <FieldCard />
@@ -38,7 +40,6 @@ function App({ initialData }) {
 
 
         </Row>
-        {/* <FieldCard /><FieldCard /><FieldCard /><FieldCard /> */}
       </Container>
 
     </div>

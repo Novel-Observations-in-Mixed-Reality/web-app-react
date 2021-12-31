@@ -11,3 +11,26 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+#custom {
+  background-color: white;
+  border-color: white;
+  padding: 0;
+  margin: 0.5rem 1rem 0;
+  height: 33px;
+  width: 33px;
+}
+
+#icon {
+  height: 2rem;
+  width: 2rem;
+  /* padding: 0 auto 0 auto; */
+}
+
+#card-field {
+  overflow: hidden;
+}
+
+#title {
+  font-size: 2rem;
+}

@@ -53,9 +53,50 @@ export default function FieldCard({ initData, cardNumber }) {
             <Dropdown.Item eventKey={eqs[2]}>{'E = ' + eqs[2]}</Dropdown.Item>
           </DropdownButton>
 
+          <Container className="m-0 p-0">
+            <Row>
+              <Col className="" md={6}>
+              {/* <Col className="" md={6} style={{"padding-right": "5px"}}> */}
+                <InputGroup size="sm" className="mb-2">
+                  <InputGroup.Text id="inputGroup-sizing-sm">  a  </InputGroup.Text>
+                  <FormControl type="number" aria-label="Small" aria-describedby="inputGroup-sizing-sm" />
+                </InputGroup>
+              </Col>
+              <Col md={6}>
+              {/* <Col md={6} style={{"padding-left": "5px"}}> */}
+                <InputGroup size="sm" className="mb-2">
+                  <InputGroup.Text id="inputGroup-sizing-sm">  b  </InputGroup.Text>
+                  <FormControl type="number" aria-label="Small" aria-describedby="inputGroup-sizing-sm" />
+                </InputGroup>
+              </Col>
+              <Col md={6}>
+              {/* <Col md={6} style={{"padding-right": "5px"}}> */}
+                <InputGroup size="sm" className="mb-2">
+                  <InputGroup.Text id="inputGroup-sizing-sm">  c  </InputGroup.Text>
+                  <FormControl type="number" ria-label="Small" aria-describedby="inputGroup-sizing-sm" />
+                </InputGroup>
+              </Col>
+              <Col md={6}>
+              {/* <Col md={6} style={{"padding-left": "5px"}}> */}
+                <InputGroup size="sm" className="mb-2">
+                  <InputGroup.Text id="inputGroup-sizing-sm">  d  </InputGroup.Text>
+                  <FormControl type="number" aria-label="Small" aria-describedby="inputGroup-sizing-sm" />
+                </InputGroup>
+              </Col>
+            </Row>
+          </Container>
+
           <DropdownButton className="mb-2 react-dd" title={'F = A q E'}>
             <Dropdown.Item eventKey={'A q E'}>{'F = A q E'}</Dropdown.Item>
           </DropdownButton>
+          <Container className="m-0 p-0">
+
+          <InputGroup size="sm" >
+            <InputGroup.Text id="inputGroup-sizing-sm">  A  </InputGroup.Text>
+            <FormControl type="number" aria-label="Small" aria-describedby="inputGroup-sizing-sm" />
+          </InputGroup>
+
+          </Container>
         </Accordion.Body>
       </Accordion.Item>
     )
@@ -64,7 +105,7 @@ export default function FieldCard({ initData, cardNumber }) {
   return (
     <Card border="secondary" style={{ width: 'auto' }} className="mb-3">
       <Card.Body>
-        <Card.Title>{initData.particle}</Card.Title>
+        <Card.Title className="text-center ">{initData.particle}</Card.Title>
 
         <Form>
           {/*
@@ -73,9 +114,9 @@ export default function FieldCard({ initData, cardNumber }) {
 
           <Container className="p-0">
             <Row>
-              <Col md={7} lg={6}><label for="magnitude"><h6>Magnitude</h6></label></Col>
+              <Col md={5} lg={5}><label className="h6" for="magnitude">Magnitude</label></Col>
 
-              <Col md={5} lg={6}>
+              <Col md={7} lg={7}>
                 <div>
                   <InputGroup id="magnitude" className="mb-3 col-md-5">
                     <Button variant="outline-secondary" id="button-addon1">-</Button>

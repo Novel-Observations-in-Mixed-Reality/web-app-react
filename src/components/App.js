@@ -1,7 +1,8 @@
 import '../App.css';
-import React from 'react';
+import React, { useState } from 'react';
 import FieldCard from './FieldCard';
-import { Container, Row, Col } from 'react-bootstrap';
+import { Container, Row, Col, Button, Offcanvas, Stack } from 'react-bootstrap';
+import Customization from './Customization';
 
 import testData from '../data/testData.json';
 
@@ -15,32 +16,74 @@ const data = [
 
 function App({ initialData }) {
   console.log(data)
+
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
   return (
+
     <div classame="App">
 
-      <Container fluid>
-
-        <Row >
-
-          <Col md={6} lg={4}>
-            <FieldCard initData={testData[0]} cardNumber={0}/>
-          </Col>
-          <Col md={6} lg={4}>
-            <FieldCard initData={testData[1]} cardNumber={1}/>
-          {/* </Col>
-          <Col md={6} lg={4}>
-            <FieldCard />
-          </Col>
-          <Col md={6} lg={4}>
-            <FieldCard />
-          </Col>
-          <Col md={6} lg={4}>
-            <FieldCard /> */}
-          </Col>
+      {/* <Stack direction="horizontal" className="mx-2"> */}
 
 
-        </Row>
-      </Container>
+      <Stack>
+
+        <div className="d-flex">
+          <Button id="custom" className="" onClick={handleShow}>
+            <img id="icon" src="sliders.svg" alt="Customize" />
+          </Button>
+
+
+
+          <Offcanvas show={show} onHide={handleClose}>
+            <Offcanvas.Header closeButton>
+              <Offcanvas.Title>Customization</Offcanvas.Title>
+            </Offcanvas.Header>
+            <Offcanvas.Body>
+              <Customization/>
+            </Offcanvas.Body>
+          </Offcanvas>
+
+          <Container className=" p-0 mx-0 font-weight-bold">
+            <span id="title" className="font-weight-bold">NOMR Initialization</span>
+          </Container>
+        </div>
+
+
+
+        <Container id="card-field" fluid className="mt-2 px-lg-0">
+          <Row className="mx-lg-5" >
+
+            <Col md={6} lg={4}>
+              <FieldCard initData={testData[0]} cardNumber={0} />
+            </Col>
+            <Col md={6} lg={4}>
+              <FieldCard initData={testData[1]} cardNumber={1} />
+            </Col>
+            <Col md={6} lg={4}>
+              <FieldCard initData={testData[1]} cardNumber={1} />
+            </Col>
+            <Col md={6} lg={4}>
+              <FieldCard initData={testData[1]} cardNumber={1} />
+            </Col>
+
+          </Row>
+        </Container>
+      </Stack>
+      {/* </Stack> */}
+
+
+
+
+
+
+
+
+
+
 
     </div>
   );

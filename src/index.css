@@ -34,3 +34,12 @@ code {
 #title {
   font-size: 2rem;
 }
+
+#charge-select {
+  width: auto;
+}
+
+.eq-input-text {
+  display: inline-block !important;
+  width: 2rem;
+}

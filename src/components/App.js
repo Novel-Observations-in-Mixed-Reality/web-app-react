@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import FieldCard from './FieldCard';
 import { Container, Row, Col, Button, Offcanvas, Stack } from 'react-bootstrap';
 import Customization from './Customization';
+import $ from 'jquery';
 
 import testData from '../data/testData.json';
 
@@ -15,19 +16,36 @@ const data = [
 ];
 
 function App({ initialData }) {
-  console.log(data)
 
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
+  //field checking logic later
+  const [fieldList, updateFieldList] = useState(['Electric', 'Magnetic']);
+
+  const [currData, updateData] = useState(initialData);
+
+  console.log(currData);
+
+  let cards = currData.map(function (e, idx) {
+    return (
+      <Col md={6} lg={4} key={idx}>
+        <FieldCard initData={e} cardNumber={idx} />
+      </Col>
+    )
+  });
+
+  const handleCardAdd = (cname) => {
+    let temp = currData.slice();
+    temp.push(initNewCard(cname, fieldList));
+    updateData(temp);
+  };
+
   return (
 
     <div classame="App">
-
-      {/* <Stack direction="horizontal" className="mx-2"> */}
-
 
       <Stack>
 
@@ -36,14 +54,12 @@ function App({ initialData }) {
             <img id="icon" src="sliders.svg" alt="Customize" />
           </Button>
 
-
-
           <Offcanvas show={show} onHide={handleClose}>
             <Offcanvas.Header closeButton>
               <Offcanvas.Title>Customization</Offcanvas.Title>
             </Offcanvas.Header>
-            <Offcanvas.Body>
-              <Customization/>
+            <Offcanvas.Body className="px-4">
+              <Customization cardCallBack={handleCardAdd} />
             </Offcanvas.Body>
           </Offcanvas>
 
@@ -52,41 +68,39 @@ function App({ initialData }) {
           </Container>
         </div>
 
-
-
         <Container id="card-field" fluid className="mt-2 px-lg-0">
           <Row className="mx-lg-5" >
-
-            <Col md={6} lg={4}>
-              <FieldCard initData={testData[0]} cardNumber={0} />
-            </Col>
-            <Col md={6} lg={4}>
-              <FieldCard initData={testData[1]} cardNumber={1} />
-            </Col>
-            <Col md={6} lg={4}>
-              <FieldCard initData={testData[1]} cardNumber={1} />
-            </Col>
-            <Col md={6} lg={4}>
-              <FieldCard initData={testData[1]} cardNumber={1} />
-            </Col>
-
+            {cards}
           </Row>
         </Container>
       </Stack>
-      {/* </Stack> */}
-
-
-
-
-
-
-
-
-
-
 
     </div>
   );
+}
+
+function initNewCard(cname, fieldList) {
+  let fieldData = fieldList.map((field) => {
+    return (
+      {
+        "fieldName": field,
+        "currGenEq": 0,
+        "genVal1": 0,
+        "genVal2": 0,
+        "genVal3": 0,
+        "genVal4": 0,
+        "reactVal1": 0
+      }
+    )
+  }
+  );
+
+  return (
+    {
+      "particle": cname,
+      "mag": 0,
+      "fieldData": fieldData
+    });
 }
 
 export default App;

@@ -1,12 +1,12 @@
 import '../App.css';
 import React, { useState } from 'react';
-import FieldCard from './FieldCard';
-import { Container, Row, Col, Button, ButtonGroup, Stack, ToggleButton } from 'react-bootstrap';
+import { Container, Row, Col, Button, ButtonGroup, InputGroup, FormControl, ToggleButton } from 'react-bootstrap';
+import $, { Callbacks } from 'jquery';
 
-export default function Customization() {
+export default function Customization({ cardCallBack }) {
 
   const [checked, setChecked] = useState(false);
-  const [radioValue, setRadioValue] = useState("1");
+  const [radioValue, setRadioValue] = useState("positive");
 
   const radios = [
     { name: 'Active', value: '1' },
@@ -14,35 +14,27 @@ export default function Customization() {
     { name: 'Radio', value: '3' },
   ];
 
+  const handleAddCard = (e) => {
+    let selected = $('#charge-select input:radio:checked').val();
+    if (selected !== "cus") {
+      cardCallBack(selected);
+    }
+    else {
+      cardCallBack($('#cname-input input').val());
+    }
+  }
+
   return (
     <>
-      {/* <ButtonGroup>
-        {radios.map((radio, idx) => (
-          <ToggleButton
-            key={idx}
-            id={`radio-${idx}`}
-            type="radio"
-            variant={idx % 2 ? 'outline-success' : 'outline-danger'}
-            name="radio"
-            value={radio.value}
-            checked={radioValue === radio.value}
-            onChange={(e) => setRadioValue(e.currentTarget.value)}
-          >
-            {radio.name}
-          </ToggleButton>
-        ))}
-      </ButtonGroup>
-      <br /> */}
-      <ButtonGroup>
+      <ButtonGroup id="charge-select" className="mb-3 d-flex">
 
-        <ToggleButton
+        <ToggleButton className="m-0 "
           key={1}
           id={`radio-${1}`}
           type="radio"
           variant="outline-primary"
-          name="radio"
-          value={1}
-          checked={radioValue === "1"}
+          value={"positive"}
+          checked={radioValue === "positive"}
           onChange={(e) => setRadioValue(e.currentTarget.value)}
         >
           {"Positive"}
@@ -53,9 +45,8 @@ export default function Customization() {
           id={`radio-${2}`}
           type="radio"
           variant="outline-danger"
-          name="radio"
-          value={2}
-          checked={radioValue === "2"}
+          value={"negative"}
+          checked={radioValue === "negative"}
           onChange={(e) => setRadioValue(e.currentTarget.value)}
         >
           {"Negative"}
@@ -66,14 +57,25 @@ export default function Customization() {
           id={`radio-${3}`}
           type="radio"
           variant="outline-dark"
-          name="radio"
-          value={3}
-          checked={radioValue === "3"}
+          value={"cus"}
+          checked={radioValue === "cus"}
           onChange={(e) => setRadioValue(e.currentTarget.value)}
         >
           {"Custom"}
         </ToggleButton>
       </ButtonGroup>
+
+      <InputGroup id="cname-input" className="mb-3">
+        <FormControl
+          placeholder="Custom Name"
+          aria-label="Custom Name"
+          aria-describedby="basic-addon2"
+          disabled={radioValue === "cus" ? false : true}
+        />
+        <Button variant="primary" id="button-addon2" onClick={handleAddCard}>
+          Add
+        </Button>
+      </InputGroup>
 
     </>
   );

@@ -16,10 +16,6 @@ export default function FieldCard({ initData, cardNumber }) {
   const [fieldData, updateFD] = useState(initData.fieldData);
 
   const [index, updateIndex] = useState(0);
-  console.log(index);
-  //console.log(fieldData)
-
-  //console.log(testData)
 
   const handleEq = (value) => {
     let temp = fieldData.slice();
@@ -36,13 +32,13 @@ export default function FieldCard({ initData, cardNumber }) {
 
   //console.log(cardNumber);
 
-  let fieldAccordions = fieldData.map((field) => {
+  let fieldAccordions = fieldData.map((field, idx) => {
 
     let index = fieldData.findIndex(obj => obj.fieldName === field.fieldName);
     // console.log(index);
     // console.log(field)
     return (
-      <Accordion.Item eventKey={index.toString()}>
+      <Accordion.Item key={idx} eventKey={index.toString()}>
         <Accordion.Button className='h6 mb-0' data-index={index} onClick={handleToggle}>
           {field.fieldName + ' Field'}
         </Accordion.Button>
@@ -56,30 +52,26 @@ export default function FieldCard({ initData, cardNumber }) {
           <Container className="m-0 p-0">
             <Row>
               <Col className="" md={6}>
-              {/* <Col className="" md={6} style={{"padding-right": "5px"}}> */}
                 <InputGroup size="sm" className="mb-2">
-                  <InputGroup.Text id="inputGroup-sizing-sm">  a  </InputGroup.Text>
+                  <InputGroup.Text className="eq-input-text">a</InputGroup.Text>
                   <FormControl type="number" aria-label="Small" aria-describedby="inputGroup-sizing-sm" />
                 </InputGroup>
               </Col>
               <Col md={6}>
-              {/* <Col md={6} style={{"padding-left": "5px"}}> */}
                 <InputGroup size="sm" className="mb-2">
-                  <InputGroup.Text id="inputGroup-sizing-sm">  b  </InputGroup.Text>
+                  <InputGroup.Text className="eq-input-text">b</InputGroup.Text>
                   <FormControl type="number" aria-label="Small" aria-describedby="inputGroup-sizing-sm" />
                 </InputGroup>
               </Col>
               <Col md={6}>
-              {/* <Col md={6} style={{"padding-right": "5px"}}> */}
                 <InputGroup size="sm" className="mb-2">
-                  <InputGroup.Text id="inputGroup-sizing-sm">  c  </InputGroup.Text>
+                  <InputGroup.Text className="eq-input-text">c</InputGroup.Text>
                   <FormControl type="number" ria-label="Small" aria-describedby="inputGroup-sizing-sm" />
                 </InputGroup>
               </Col>
               <Col md={6}>
-              {/* <Col md={6} style={{"padding-left": "5px"}}> */}
                 <InputGroup size="sm" className="mb-2">
-                  <InputGroup.Text id="inputGroup-sizing-sm">  d  </InputGroup.Text>
+                  <InputGroup.Text className="eq-input-text">d</InputGroup.Text>
                   <FormControl type="number" aria-label="Small" aria-describedby="inputGroup-sizing-sm" />
                 </InputGroup>
               </Col>
@@ -92,7 +84,7 @@ export default function FieldCard({ initData, cardNumber }) {
           <Container className="m-0 p-0">
 
           <InputGroup size="sm" >
-            <InputGroup.Text id="inputGroup-sizing-sm">  A  </InputGroup.Text>
+            <InputGroup.Text className="eq-input-text">A</InputGroup.Text>
             <FormControl type="number" aria-label="Small" aria-describedby="inputGroup-sizing-sm" />
           </InputGroup>
 
@@ -105,7 +97,7 @@ export default function FieldCard({ initData, cardNumber }) {
   return (
     <Card border="secondary" style={{ width: 'auto' }} className="mb-3">
       <Card.Body>
-        <Card.Title className="text-center ">{initData.particle}</Card.Title>
+        <Card.Title className="text-center text-capitalize">{initData.particle + " Charge"}</Card.Title>
 
         <Form>
           {/*
@@ -114,7 +106,7 @@ export default function FieldCard({ initData, cardNumber }) {
 
           <Container className="p-0">
             <Row>
-              <Col md={5} lg={5}><label className="h6" for="magnitude">Magnitude</label></Col>
+              <Col md={5} lg={5}><label className="h6" htmlFor="magnitude">Magnitude</label></Col>
 
               <Col md={7} lg={7}>
                 <div>

@@ -1,6 +1,6 @@
 [
   {
-    "particle": "Positive Charge",
+    "particle": "Positive",
     "mag": 0,
     "fieldData": [
       {
@@ -24,12 +24,12 @@
     ]
   },
   {
-    "particle": "Negative Charge",
+    "particle": "Negative",
     "mag": 0,
     "fieldData": [
       {
         "fieldName": "Electric",
-        "currGenEq": 0,
+        "currGenEq": 1,
         "genVal1": 0,
         "genVal2": 0,
         "genVal3": 0,

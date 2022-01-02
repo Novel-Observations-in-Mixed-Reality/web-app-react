@@ -6,14 +6,11 @@ import reportWebVitals from './reportWebVitals';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 
+import testData from './data/testData.json';
+
 ReactDOM.render(
   <React.StrictMode>
-    <App initData={[
-  { "fieldName": "Magnetic"},
-  { "fieldName": "Electric"},
-  { "fieldName": "Mlectric"},
-  { "fieldName": "Xagnetic"},
-]}/>
+    <App initialData={testData}/>
   </React.StrictMode>,
   document.getElementById('root')
 );

@@ -4,23 +4,21 @@ import '../index.css';
 
 const eqs = ['q (a r^b + c)', 'a q log_b(cr + d)', 'a q v'];
 
-export default function FieldCard({ fieldList, ptclData, cardNumber }) {
+export default function FieldCard({ fieldList, ptclData, defaultActiveKey }) {
+
+  console.log(defaultActiveKey);
 
   const [fieldData, updateFD] = useState(ptclData.fieldData);
-
-  // console.log(fieldList)
 
   const [index, updateIndex] = useState(0);
 
   const handleEq = (value) => {
     let temp = fieldData.slice();
-    // console.log(temp)
     temp[index].currGenEq = eqs.indexOf(value);
     updateFD(temp);
   };
 
   const handleToggle = (event) => {
-    // console.log(event.target.dataset.index)
     updateIndex(event.target.dataset.index);
   };
 
@@ -40,6 +38,7 @@ export default function FieldCard({ fieldList, ptclData, cardNumber }) {
     }
 
     if (!field.disabled) {
+      console.log(id)
       return (
         <Accordion.Item key={id} eventKey={id.toString()}>
           <Accordion.Button className='h6 mb-0 text-capitalize' data-index={id - 1} onClick={handleToggle}>
@@ -108,9 +107,6 @@ export default function FieldCard({ fieldList, ptclData, cardNumber }) {
         <Card.Title className="text-center text-capitalize">{ptclData.particle + " Charge"}</Card.Title>
 
         <Form>
-          {/*
-          <Form.Group className="mb-3" controlId="magnitude">
-            <Form.Label className="col-md-7">Magnitude</Form.Label> */}
 
           <Container className="p-0">
             <Row>
@@ -131,7 +127,8 @@ export default function FieldCard({ fieldList, ptclData, cardNumber }) {
               </Col>
             </Row>
           </Container>
-          <Accordion defaultActiveKey="1">
+          {/* {TODO: implement changing activeDefaultKey} */}
+          <Accordion defaultActiveKey={defaultActiveKey.toString()}>
             {fieldAccordions}
           </Accordion>
         </Form>

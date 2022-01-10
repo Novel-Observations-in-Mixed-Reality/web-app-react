@@ -1,18 +1,11 @@
 import '../App.css';
 import React, { useState } from 'react';
-import { Container, Row, Col, Button, ButtonGroup, InputGroup, FormControl, ToggleButton } from 'react-bootstrap';
+import { Form, Button, ButtonGroup, InputGroup, FormControl, ToggleButton } from 'react-bootstrap';
 import $, { Callbacks } from 'jquery';
 
-export default function Customization({ cardCallBack, fieldCallBack }) {
+export default function Customization({ fieldList, cardCallBack, fieldAddCallback, fieldCheckCallback }) {
 
-  const [checked, setChecked] = useState(false);
   const [radioValue, setRadioValue] = useState("positive");
-
-  const radios = [
-    { name: 'Active', value: '1' },
-    { name: 'Radio', value: '2' },
-    { name: 'Radio', value: '3' },
-  ];
 
   const handleChargeProp = (e) => {
     let selected = $('#charge-select input:radio:checked').val();
@@ -23,6 +16,20 @@ export default function Customization({ cardCallBack, fieldCallBack }) {
       cardCallBack($('#cname-input input').val());
     }
   }
+
+  let fieldChecks = fieldList.map((field) => {
+    return (
+      <Form.Check
+        key={field.fieldID}
+        type="switch"
+        id={"switch-" + field.fieldID}
+        label={field.fieldName}
+        className='text-capitalize'
+        checked={!field.disabled}
+        onChange={fieldCheckCallback}
+      />
+    )
+  });
 
   return (
     <>
@@ -79,16 +86,20 @@ export default function Customization({ cardCallBack, fieldCallBack }) {
       </InputGroup>
 
       <h5 className="mb-3">Create New Field</h5>
-      <InputGroup id="field-input" className="mb-3 pb-3">
+      <InputGroup id="field-input" className="mb-3">
         <FormControl
           placeholder="Custom Field"
           aria-label="Custom Field"
           aria-describedby="basic-addon2"
         />
-        <Button variant="primary" id="button-addon2" onClick={e => fieldCallBack($('#field-input input').val())}>
+        <Button variant="primary" id="button-addon2" onClick={e => fieldAddCallback($('#field-input input').val())}>
           Add
         </Button>
       </InputGroup>
+
+      <Form>
+        {fieldChecks}
+      </Form>
     </>
   );
 }

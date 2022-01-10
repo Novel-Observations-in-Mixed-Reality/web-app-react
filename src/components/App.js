@@ -3,36 +3,28 @@ import React, { useState } from 'react';
 import FieldCard from './FieldCard';
 import { Container, Row, Col, Button, Offcanvas, Stack } from 'react-bootstrap';
 import Customization from './Customization';
-import $ from 'jquery';
-
-import testData from '../data/testData.json';
-
-const data = [
-  { "fieldName": "Magnetic", "currGenEq": 0, "genVal1": 1, "genVal2": 0, "genVal3": 0, "genVal4": 0, "reactVal1": 0 },
-  { "fieldName": "Electric", "currGenEq": 1, "genVal1": 0, "genVal2": 0, "genVal3": 0, "genVal4": 0, "reactVal1": 0 },
-  { "fieldName": "Mlectric", "currGenEq": 0, "genVal1": 0, "genVal2": 0, "genVal3": 0, "genVal4": 0, "reactVal1": 0 },
-  { "fieldName": "Xagnetic", "currGenEq": 0, "genVal1": 0, "genVal2": 0, "genVal3": 0, "genVal4": 0, "reactVal1": 0 },
-
-];
 
 function App({ initialData }) {
-  // console.log(initialData[0].particles)
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
-  //field checking logic later
   const [fieldList, updateFieldList] = useState(initialData[0].fields);
 
   const [currData, updateData] = useState(initialData[0].particles);
 
-  console.log(currData);
+  //TODO: implement implement changing activeDefaultKey
+  let defaultActiveField = fieldList.find((field => field.disabled === false));
 
   let cards = currData.map(function (e, idx) {
     return (
       <Col md={6} lg={4} key={idx}>
-        <FieldCard fieldList={fieldList} ptclData={e} cardNumber={idx} />
+        <FieldCard
+          fieldList={fieldList}
+          ptclData={e}
+          defaultActiveKey={defaultActiveField === undefined ? "1" : defaultActiveField.fieldID}
+        />
       </Col>
     )
   });
@@ -49,10 +41,21 @@ function App({ initialData }) {
     let notDupe = fieldList.every(field => fname.toLowerCase() !== field.fieldName.toLowerCase());
     if (notDupe) {
       temp.push({
-        "fieldID": (fieldList.length+1),
+        "fieldID": (fieldList.length + 1),
         "fieldName": fname
       })
     }
+    updateFieldList(temp);
+  };
+
+  const handleCheckField = (e) => {
+    let temp = fieldList.map((field) => {
+      if (parseInt(e.target.id.split("-")[1]) === field.fieldID) {
+        field.disabled = !field.disabled;
+      }
+      return field;
+    })
+    console.log(temp)
     updateFieldList(temp);
   };
 
@@ -72,7 +75,12 @@ function App({ initialData }) {
               <Offcanvas.Title className="title">Customization</Offcanvas.Title>
             </Offcanvas.Header>
             <Offcanvas.Body className="px-4">
-              <Customization cardCallBack={handleCardAdd} fieldCallBack={handleAddField} />
+              <Customization
+                fieldList={fieldList}
+                cardCallBack={handleCardAdd}
+                fieldAddCallback={handleAddField}
+                fieldCheckCallback={handleCheckField}
+              />
             </Offcanvas.Body>
           </Offcanvas>
 

@@ -9,12 +9,12 @@
       {
         "fieldID": 2,
         "fieldName": "Magnetic",
-        "disabled": true
+        "disabled": false
       },
       {
         "fieldID": 3,
         "fieldName": "Test",
-        "disabled": false
+        "disabled": true
       }
     ],
     "particles": [

@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { Container, Row, Col, Button, ButtonGroup, InputGroup, FormControl, ToggleButton } from 'react-bootstrap';
 import $, { Callbacks } from 'jquery';
 
-export default function Customization({ cardCallBack }) {
+export default function Customization({ cardCallBack, fieldCallBack }) {
 
   const [checked, setChecked] = useState(false);
   const [radioValue, setRadioValue] = useState("positive");
@@ -14,7 +14,7 @@ export default function Customization({ cardCallBack }) {
     { name: 'Radio', value: '3' },
   ];
 
-  const handleAddCard = (e) => {
+  const handleChargeProp = (e) => {
     let selected = $('#charge-select input:radio:checked').val();
     if (selected !== "cus") {
       cardCallBack(selected);
@@ -26,6 +26,7 @@ export default function Customization({ cardCallBack }) {
 
   return (
     <>
+      <h5 className="mb-3">Create New Charge</h5>
       <ButtonGroup id="charge-select" className="mb-3 d-flex">
 
         <ToggleButton className="m-0 "
@@ -65,18 +66,29 @@ export default function Customization({ cardCallBack }) {
         </ToggleButton>
       </ButtonGroup>
 
-      <InputGroup id="cname-input" className="mb-3">
+      <InputGroup id="cname-input" className="mb-3 pb-3">
         <FormControl
           placeholder="Custom Name"
           aria-label="Custom Name"
           aria-describedby="basic-addon2"
           disabled={radioValue === "cus" ? false : true}
         />
-        <Button variant="primary" id="button-addon2" onClick={handleAddCard}>
+        <Button variant="primary" id="button-addon2" onClick={handleChargeProp}>
           Add
         </Button>
       </InputGroup>
 
+      <h5 className="mb-3">Create New Field</h5>
+      <InputGroup id="field-input" className="mb-3 pb-3">
+        <FormControl
+          placeholder="Custom Field"
+          aria-label="Custom Field"
+          aria-describedby="basic-addon2"
+        />
+        <Button variant="primary" id="button-addon2" onClick={e => fieldCallBack($('#field-input input').val())}>
+          Add
+        </Button>
+      </InputGroup>
     </>
   );
 }

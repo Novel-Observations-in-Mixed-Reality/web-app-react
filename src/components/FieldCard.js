@@ -3,47 +3,55 @@ import { InputGroup, FormControl, Form, Container, Row, Col, Card, Accordion, Dr
 import '../index.css';
 
 const eqs = ['q (a r^b + c)', 'a q log_b(cr + d)', 'a q v'];
-const data = [
-  { "fieldName": "Magnetic", "currGenEq": 0, "genVal1": 1, "genVal2": 0, "genVal3": 0, "genVal4": 0, "reactVal1": 0 },
-  { "fieldName": "Electric", "currGenEq": 1, "genVal1": 0, "genVal2": 0, "genVal3": 0, "genVal4": 0, "reactVal1": 0 },
-  //{ "fieldName": "Mlectric", "currGenEq": 0, "genVal1": 0, "genVal2": 0, "genVal3": 0, "genVal4": 0, "reactVal1": 0 },
-  // { "fieldName": "Xagnetic", "currGenEq": 0, "genVal1": 0, "genVal2": 0, "genVal3": 0, "genVal4": 0, "reactVal1": 0 },
 
-];
+export default function FieldCard({ fieldList, ptclData, cardNumber }) {
 
-export default function FieldCard({ initData, cardNumber }) {
+  const [fieldData, updateFD] = useState(ptclData.fieldData);
 
-  const [fieldData, updateFD] = useState(initData.fieldData);
+  // console.log(fieldList)
 
   const [index, updateIndex] = useState(0);
 
   const handleEq = (value) => {
     let temp = fieldData.slice();
-    console.log(temp)
+    // console.log(temp)
     temp[index].currGenEq = eqs.indexOf(value);
     updateFD(temp);
   };
 
   const handleToggle = (event) => {
-    // console.log(fieldData)
+    // console.log(event.target.dataset.index)
     updateIndex(event.target.dataset.index);
   };
 
 
-  //console.log(cardNumber);
-
-  let fieldAccordions = fieldData.map((field, idx) => {
-
-    let index = fieldData.findIndex(obj => obj.fieldName === field.fieldName);
-    // console.log(index);
-    // console.log(field)
+  let fieldAccordions = fieldList.map((field, idx) => {
+    let id = field.fieldID;
+    if (fieldData.length < id) {
+      fieldData.push({
+          "fieldID": id,
+          "currGenEq": 0,
+          "genVal1": 0,
+          "genVal2": 0,
+          "genVal3": 0,
+          "genVal4": 0,
+          "reactVal1": 0
+      });
+    }
+    // console.log(id)
+    // console.log(fieldData)
+    // console.log(fieldList)
     return (
-      <Accordion.Item key={idx} eventKey={index.toString()}>
-        <Accordion.Button className='h6 mb-0' data-index={index} onClick={handleToggle}>
+      <Accordion.Item key={id} eventKey={id.toString()}>
+        <Accordion.Button className='h6 mb-0 text-capitalize' data-index={id-1} onClick={handleToggle}>
           {field.fieldName + ' Field'}
         </Accordion.Button>
         <Accordion.Body>
-          <DropdownButton className="mb-2 gen-dd" title={'E = ' + eqs[field.currGenEq]} onSelect={handleEq}>
+          <DropdownButton className="mb-2 gen-dd"
+            // title={'E = ' + eqs[field.currGenEq]}
+            title={'E = ' + eqs[fieldData[id-1].currGenEq]}
+            onSelect={handleEq}
+          >
             <Dropdown.Item eventKey={eqs[0]}>{'E = ' + eqs[0]}</Dropdown.Item>
             <Dropdown.Item eventKey={eqs[1]}>{'E = ' + eqs[1]}</Dropdown.Item>
             <Dropdown.Item eventKey={eqs[2]}>{'E = ' + eqs[2]}</Dropdown.Item>
@@ -83,10 +91,10 @@ export default function FieldCard({ initData, cardNumber }) {
           </DropdownButton>
           <Container className="m-0 p-0">
 
-          <InputGroup size="sm" >
-            <InputGroup.Text className="eq-input-text">A</InputGroup.Text>
-            <FormControl type="number" aria-label="Small" aria-describedby="inputGroup-sizing-sm" />
-          </InputGroup>
+            <InputGroup size="sm" >
+              <InputGroup.Text className="eq-input-text">A</InputGroup.Text>
+              <FormControl type="number" aria-label="Small" aria-describedby="inputGroup-sizing-sm" />
+            </InputGroup>
 
           </Container>
         </Accordion.Body>
@@ -94,10 +102,12 @@ export default function FieldCard({ initData, cardNumber }) {
     )
   });
 
+  console.log(fieldAccordions)
+
   return (
     <Card border="secondary" style={{ width: 'auto' }} className="mb-3">
       <Card.Body>
-        <Card.Title className="text-center text-capitalize">{initData.particle + " Charge"}</Card.Title>
+        <Card.Title className="text-center text-capitalize">{ptclData.particle + " Charge"}</Card.Title>
 
         <Form>
           {/*
@@ -123,7 +133,7 @@ export default function FieldCard({ initData, cardNumber }) {
               </Col>
             </Row>
           </Container>
-          <Accordion defaultActiveKey="0">
+          <Accordion defaultActiveKey="1">
             {fieldAccordions}
           </Accordion>
         </Form>

@@ -31,8 +31,8 @@ code {
   overflow: hidden;
 }
 
-#title {
-  font-size: 2rem;
+.title {
+  font-size: 2rem !important;
 }
 
 #charge-select {

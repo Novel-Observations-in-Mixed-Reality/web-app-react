@@ -29,80 +29,78 @@ export default function FieldCard({ fieldList, ptclData, cardNumber }) {
     let id = field.fieldID;
     if (fieldData.length < id) {
       fieldData.push({
-          "fieldID": id,
-          "currGenEq": 0,
-          "genVal1": 0,
-          "genVal2": 0,
-          "genVal3": 0,
-          "genVal4": 0,
-          "reactVal1": 0
+        "fieldID": id,
+        "currGenEq": 0,
+        "genVal1": 0,
+        "genVal2": 0,
+        "genVal3": 0,
+        "genVal4": 0,
+        "reactVal1": 0
       });
     }
-    // console.log(id)
-    // console.log(fieldData)
-    // console.log(fieldList)
-    return (
-      <Accordion.Item key={id} eventKey={id.toString()}>
-        <Accordion.Button className='h6 mb-0 text-capitalize' data-index={id-1} onClick={handleToggle}>
-          {field.fieldName + ' Field'}
-        </Accordion.Button>
-        <Accordion.Body>
-          <DropdownButton className="mb-2 gen-dd"
-            // title={'E = ' + eqs[field.currGenEq]}
-            title={'E = ' + eqs[fieldData[id-1].currGenEq]}
-            onSelect={handleEq}
-          >
-            <Dropdown.Item eventKey={eqs[0]}>{'E = ' + eqs[0]}</Dropdown.Item>
-            <Dropdown.Item eventKey={eqs[1]}>{'E = ' + eqs[1]}</Dropdown.Item>
-            <Dropdown.Item eventKey={eqs[2]}>{'E = ' + eqs[2]}</Dropdown.Item>
-          </DropdownButton>
 
-          <Container className="m-0 p-0">
-            <Row>
-              <Col className="" md={6}>
-                <InputGroup size="sm" className="mb-2">
-                  <InputGroup.Text className="eq-input-text">a</InputGroup.Text>
-                  <FormControl type="number" aria-label="Small" aria-describedby="inputGroup-sizing-sm" />
-                </InputGroup>
-              </Col>
-              <Col md={6}>
-                <InputGroup size="sm" className="mb-2">
-                  <InputGroup.Text className="eq-input-text">b</InputGroup.Text>
-                  <FormControl type="number" aria-label="Small" aria-describedby="inputGroup-sizing-sm" />
-                </InputGroup>
-              </Col>
-              <Col md={6}>
-                <InputGroup size="sm" className="mb-2">
-                  <InputGroup.Text className="eq-input-text">c</InputGroup.Text>
-                  <FormControl type="number" ria-label="Small" aria-describedby="inputGroup-sizing-sm" />
-                </InputGroup>
-              </Col>
-              <Col md={6}>
-                <InputGroup size="sm" className="mb-2">
-                  <InputGroup.Text className="eq-input-text">d</InputGroup.Text>
-                  <FormControl type="number" aria-label="Small" aria-describedby="inputGroup-sizing-sm" />
-                </InputGroup>
-              </Col>
-            </Row>
-          </Container>
+    if (!field.disabled) {
+      return (
+        <Accordion.Item key={id} eventKey={id.toString()}>
+          <Accordion.Button className='h6 mb-0 text-capitalize' data-index={id - 1} onClick={handleToggle}>
+            {field.fieldName + ' Field'}
+          </Accordion.Button>
+          <Accordion.Body>
+            <DropdownButton className="mb-2 gen-dd"
+              title={'E = ' + eqs[fieldData[id - 1].currGenEq]}
+              onSelect={handleEq}
+            >
+              <Dropdown.Item eventKey={eqs[0]}>{'E = ' + eqs[0]}</Dropdown.Item>
+              <Dropdown.Item eventKey={eqs[1]}>{'E = ' + eqs[1]}</Dropdown.Item>
+              <Dropdown.Item eventKey={eqs[2]}>{'E = ' + eqs[2]}</Dropdown.Item>
+            </DropdownButton>
 
-          <DropdownButton className="mb-2 react-dd" title={'F = A q E'}>
-            <Dropdown.Item eventKey={'A q E'}>{'F = A q E'}</Dropdown.Item>
-          </DropdownButton>
-          <Container className="m-0 p-0">
+            <Container className="m-0 p-0">
+              <Row>
+                <Col className="" md={6}>
+                  <InputGroup size="sm" className="mb-2">
+                    <InputGroup.Text className="eq-input-text">a</InputGroup.Text>
+                    <FormControl type="number" aria-label="Small" aria-describedby="inputGroup-sizing-sm" />
+                  </InputGroup>
+                </Col>
+                <Col md={6}>
+                  <InputGroup size="sm" className="mb-2">
+                    <InputGroup.Text className="eq-input-text">b</InputGroup.Text>
+                    <FormControl type="number" aria-label="Small" aria-describedby="inputGroup-sizing-sm" />
+                  </InputGroup>
+                </Col>
+                <Col md={6}>
+                  <InputGroup size="sm" className="mb-2">
+                    <InputGroup.Text className="eq-input-text">c</InputGroup.Text>
+                    <FormControl type="number" ria-label="Small" aria-describedby="inputGroup-sizing-sm" />
+                  </InputGroup>
+                </Col>
+                <Col md={6}>
+                  <InputGroup size="sm" className="mb-2">
+                    <InputGroup.Text className="eq-input-text">d</InputGroup.Text>
+                    <FormControl type="number" aria-label="Small" aria-describedby="inputGroup-sizing-sm" />
+                  </InputGroup>
+                </Col>
+              </Row>
+            </Container>
 
-            <InputGroup size="sm" >
-              <InputGroup.Text className="eq-input-text">A</InputGroup.Text>
-              <FormControl type="number" aria-label="Small" aria-describedby="inputGroup-sizing-sm" />
-            </InputGroup>
+            <DropdownButton className="mb-2 react-dd" title={'F = A q E'}>
+              <Dropdown.Item eventKey={'A q E'}>{'F = A q E'}</Dropdown.Item>
+            </DropdownButton>
+            <Container className="m-0 p-0">
 
-          </Container>
-        </Accordion.Body>
-      </Accordion.Item>
-    )
+              <InputGroup size="sm" >
+                <InputGroup.Text className="eq-input-text">A</InputGroup.Text>
+                <FormControl type="number" aria-label="Small" aria-describedby="inputGroup-sizing-sm" />
+              </InputGroup>
+
+            </Container>
+          </Accordion.Body>
+        </Accordion.Item>
+      )
+    }
+    return (<React.Fragment key={id}></React.Fragment>)
   });
-
-  console.log(fieldAccordions)
 
   return (
     <Card border="secondary" style={{ width: 'auto' }} className="mb-3">

@@ -3,15 +3,18 @@
     "fields": [
       {
         "fieldID": 1,
-        "fieldName": "Electric"
+        "fieldName": "Electric",
+        "disabled": false
       },
       {
         "fieldID": 2,
-        "fieldName": "Magnetic"
+        "fieldName": "Magnetic",
+        "disabled": true
       },
       {
         "fieldID": 3,
-        "fieldName": "Test"
+        "fieldName": "Test",
+        "disabled": false
       }
     ],
     "particles": [

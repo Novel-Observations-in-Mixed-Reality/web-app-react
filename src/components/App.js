@@ -17,6 +17,17 @@ function App({ initialData }) {
   //TODO: implement implement changing activeDefaultKey
   let defaultActiveField = fieldList.find((field => field.disabled === false));
 
+  console.log(currData);
+  const handleValueUpdate = (e) => {
+    let temp = currData.map((ptcl) => {
+      if (ptcl.particle === e.particle) {
+        return e;
+      }
+      return ptcl;
+    })
+    updateData(temp);
+  }
+
   let cards = currData.map(function (e, idx) {
     return (
       <Col md={6} lg={4} key={idx}>
@@ -24,6 +35,7 @@ function App({ initialData }) {
           fieldList={fieldList}
           ptclData={e}
           defaultActiveKey={defaultActiveField === undefined ? "1" : defaultActiveField.fieldID}
+          valueChangeCallback={handleValueUpdate}
         />
       </Col>
     )
@@ -58,6 +70,8 @@ function App({ initialData }) {
     console.log(temp)
     updateFieldList(temp);
   };
+
+
 
   return (
 

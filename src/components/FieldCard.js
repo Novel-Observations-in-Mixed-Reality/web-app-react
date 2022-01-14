@@ -4,9 +4,7 @@ import '../index.css';
 
 const eqs = ['q (a r^b + c)', 'a q log_b(cr + d)', 'a q v'];
 
-export default function FieldCard({ fieldList, ptclData, defaultActiveKey }) {
-
-  console.log(defaultActiveKey);
+export default function FieldCard({ fieldList, ptclData, defaultActiveKey, valueChangeCallback }) {
 
   const [fieldData, updateFD] = useState(ptclData.fieldData);
 
@@ -22,6 +20,19 @@ export default function FieldCard({ fieldList, ptclData, defaultActiveKey }) {
     updateIndex(event.target.dataset.index);
   };
 
+  const handleValueChange = (e) => {
+    let idSep = e.currentTarget.id.split('-');
+    let key = idSep[1] + idSep[2].charAt(0).toUpperCase() + idSep[2].slice(1);
+    let temp = fieldData.map((field) => {
+      if (field.fieldID === parseInt(idSep[idSep.length - 1])) {
+        field[key] = e.currentTarget.value;
+      }
+      return field;
+    })
+    ptclData.fieldData = temp;
+    valueChangeCallback(ptclData);
+  }
+
 
   let fieldAccordions = fieldList.map((field, idx) => {
     let id = field.fieldID;
@@ -29,16 +40,17 @@ export default function FieldCard({ fieldList, ptclData, defaultActiveKey }) {
       fieldData.push({
         "fieldID": id,
         "currGenEq": 0,
-        "genVal1": 0,
-        "genVal2": 0,
-        "genVal3": 0,
-        "genVal4": 0,
-        "reactVal1": 0
+        "genVal1": "0",
+        "genVal2": "0",
+        "genVal3": "0",
+        "genVal4": "0",
+        "reactVal1": "0"
       });
     }
 
+    let currFieldData = fieldData.filter(currField => currField.fieldID === id)[0];
+
     if (!field.disabled) {
-      console.log(id)
       return (
         <Accordion.Item key={id} eventKey={id.toString()}>
           <Accordion.Button className='h6 mb-0 text-capitalize' data-index={id - 1} onClick={handleToggle}>
@@ -56,30 +68,47 @@ export default function FieldCard({ fieldList, ptclData, defaultActiveKey }) {
 
             <Container className="m-0 p-0">
               <Row>
+
                 <Col className="" md={6}>
                   <InputGroup size="sm" className="mb-2">
                     <InputGroup.Text className="eq-input-text">a</InputGroup.Text>
-                    <FormControl type="number" aria-label="Small" aria-describedby="inputGroup-sizing-sm" />
+                    <FormControl className="text-center" type="number" aria-label="Small" defaultValue={currFieldData.genVal1} aria-describedby="inputGroup-sizing-sm"
+                      id={ptclData.particle.toLowerCase() + "-gen-val1-field-" + id}
+                      onChange={handleValueChange}
+                    />
                   </InputGroup>
                 </Col>
+
                 <Col md={6}>
                   <InputGroup size="sm" className="mb-2">
                     <InputGroup.Text className="eq-input-text">b</InputGroup.Text>
-                    <FormControl type="number" aria-label="Small" aria-describedby="inputGroup-sizing-sm" />
+                    <FormControl className="text-center" type="number" aria-label="Small" defaultValue={currFieldData.genVal2} aria-describedby="inputGroup-sizing-sm"
+                      id={ptclData.particle.toLowerCase() + "-gen-val2-field-" + id}
+                      onChange={handleValueChange}
+                    />
                   </InputGroup>
                 </Col>
+
                 <Col md={6}>
                   <InputGroup size="sm" className="mb-2">
                     <InputGroup.Text className="eq-input-text">c</InputGroup.Text>
-                    <FormControl type="number" ria-label="Small" aria-describedby="inputGroup-sizing-sm" />
+                    <FormControl className="text-center" type="number" ria-label="Small" defaultValue={currFieldData.genVal3} aria-describedby="inputGroup-sizing-sm"
+                      id={ptclData.particle.toLowerCase() + "-gen-val3-field-" + id}
+                      onChange={handleValueChange}
+                    />
                   </InputGroup>
                 </Col>
+
                 <Col md={6}>
                   <InputGroup size="sm" className="mb-2">
                     <InputGroup.Text className="eq-input-text">d</InputGroup.Text>
-                    <FormControl type="number" aria-label="Small" aria-describedby="inputGroup-sizing-sm" />
+                    <FormControl className="text-center" type="number" aria-label="Small" defaultValue={currFieldData.genVal4} aria-describedby="inputGroup-sizing-sm"
+                      id={ptclData.particle.toLowerCase() + "-gen-val4-field-" + id}
+                      onChange={handleValueChange}
+                    />
                   </InputGroup>
                 </Col>
+
               </Row>
             </Container>
 
@@ -90,7 +119,9 @@ export default function FieldCard({ fieldList, ptclData, defaultActiveKey }) {
 
               <InputGroup size="sm" >
                 <InputGroup.Text className="eq-input-text">A</InputGroup.Text>
-                <FormControl type="number" aria-label="Small" aria-describedby="inputGroup-sizing-sm" />
+                <FormControl id={ptclData.particle.toLowerCase() + "-react-val1-field-" + id} className="text-center" type="number" aria-label="Small" defaultValue={currFieldData.reactVal1} aria-describedby="inputGroup-sizing-sm"
+                      onChange={handleValueChange}
+                />
               </InputGroup>
 
             </Container>
@@ -101,6 +132,7 @@ export default function FieldCard({ fieldList, ptclData, defaultActiveKey }) {
     return (<React.Fragment key={id}></React.Fragment>)
   });
 
+  console.log(fieldData)
   return (
     <Card border="secondary" style={{ width: 'auto' }} className="mb-3">
       <Card.Body>
@@ -117,8 +149,14 @@ export default function FieldCard({ fieldList, ptclData, defaultActiveKey }) {
                   <InputGroup id="magnitude" className="mb-3 col-md-5">
                     <Button variant="outline-secondary" id="button-addon1">-</Button>
                     <FormControl
+                      className="text-center"
                       aria-label="Example text with button addon"
                       aria-describedby="basic-addon1"
+                      defaultValue={ptclData.mag}
+                      onChange={(e) => {
+                        ptclData.mag = e.currentTarget.value;
+                        valueChangeCallback(ptclData);
+                      }}
                     />
                     <Button variant="outline-secondary" id="button-addon1">+</Button>
                   </InputGroup>

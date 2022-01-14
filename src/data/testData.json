@@ -20,49 +20,49 @@
     "particles": [
       {
         "particle": "Positive",
-        "mag": 0,
+        "mag": "1.75",
         "fieldData": [
           {
             "fieldID": 1,
             "currGenEq": 0,
-            "genVal1": 0,
-            "genVal2": 0,
-            "genVal3": 0,
-            "genVal4": 0,
-            "reactVal1": 0
+            "genVal1": "2.5",
+            "genVal2": "0",
+            "genVal3": "0",
+            "genVal4": "0",
+            "reactVal1": "0"
           },
           {
             "fieldID": 2,
             "currGenEq": 0,
-            "genVal1": 0,
-            "genVal2": 0,
-            "genVal3": 0,
-            "genVal4": 0,
-            "reactVal1": 0
+            "genVal1": "0",
+            "genVal2": "0",
+            "genVal3": "0",
+            "genVal4": "0",
+            "reactVal1": "0"
           }
         ]
       },
       {
         "particle": "Negative",
-        "mag": 0,
+        "mag": 1,
         "fieldData": [
           {
             "fieldID": 1,
             "currGenEq": 1,
-            "genVal1": 0,
-            "genVal2": 0,
-            "genVal3": 0,
-            "genVal4": 0,
-            "reactVal1": 0
+            "genVal1": "0",
+            "genVal2": "0",
+            "genVal3": "0",
+            "genVal4": "0",
+            "reactVal1": "0"
           },
           {
             "fieldID": 2,
             "currGenEq": 0,
-            "genVal1": 0,
-            "genVal2": 0,
-            "genVal3": 0,
-            "genVal4": 0,
-            "reactVal1": 0
+            "genVal1": "0",
+            "genVal2": "0",
+            "genVal3": "0",
+            "genVal4": "0",
+            "reactVal1": "0"
           }
         ]
       }

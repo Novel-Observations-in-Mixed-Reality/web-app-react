@@ -5,6 +5,8 @@ import { Container, Row, Col, Button, Offcanvas, Stack } from 'react-bootstrap';
 import Customization from './Customization';
 
 function App({ initialData }) {
+  // let keyedData = Object.keys(initialData[0].particles).map
+
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
@@ -18,17 +20,31 @@ function App({ initialData }) {
   let defaultActiveField = fieldList.find((field => field.disabled === false));
 
   console.log(currData);
-  const handleValueUpdate = (e) => {
-    let temp = currData.map((ptcl) => {
-      if (ptcl.particle === e.particle) {
-        return e;
+
+  let ptclArray = [];
+  Object.keys(currData).forEach((key) => {
+    let temp = currData[key].map((ptcl) => { return {...ptcl, "particle": key}})
+    ptclArray = ptclArray.concat(temp);
+  });
+
+  const handleValueUpdate = (updatedPtcl) => {
+    let temp = {...currData};
+    ptclArray.every((ptcl) => {
+      if (ptcl.particle === updatedPtcl.particle) {
+        temp[ptcl.particle] = temp[ptcl.particle].map((e) => {
+          if (e.ptclID === updatedPtcl.ptclID) {
+            return updatedPtcl;
+          }
+          return e;
+        })
+        return false;
       }
-      return ptcl;
+      return true;
     })
     updateData(temp);
   }
 
-  let cards = currData.map(function (e, idx) {
+  let cards = ptclArray.map(function (e, idx) {
     return (
       <Col md={6} lg={4} key={idx}>
         <FieldCard
@@ -43,8 +59,11 @@ function App({ initialData }) {
 
 
   const handleCardAdd = (cname) => {
-    let temp = currData.slice();
-    temp.push(initNewCard(cname, fieldList));
+    if (!currData.hasOwnProperty(cname)) {
+      currData[cname] = [];
+    }
+    let temp = {...currData};
+    temp[cname].push(initNewCard(cname, temp[cname].length));
     updateData(temp);
   };
 
@@ -114,27 +133,15 @@ function App({ initialData }) {
   );
 }
 
-function initNewCard(cname, fieldList) {
-  let fieldData = fieldList.map((field) => {
-    return (
-      {
-        "fieldID": field.fieldID,
-        "currGenEq": 0,
-        "genVal1": 0,
-        "genVal2": 0,
-        "genVal3": 0,
-        "genVal4": 0,
-        "reactVal1": 0
-      }
-    )
-  }
-  );
-
+function initNewCard(cname, ptclID) {
   return (
     {
+      "ptclID" : (ptclID + 1),
       "particle": cname,
-      "mag": 0,
-      "fieldData": fieldData
+      "mag": "1",
+      "mass": "1",
+      "radius": "1",
+      "fieldData": []
     });
 }
 

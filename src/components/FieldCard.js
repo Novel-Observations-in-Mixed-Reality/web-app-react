@@ -22,7 +22,7 @@ export default function FieldCard({ fieldList, ptclData, defaultActiveKey, value
 
   const handleValueChange = (e) => {
     let idSep = e.currentTarget.id.split('-');
-    let key = idSep[1] + idSep[2].charAt(0).toUpperCase() + idSep[2].slice(1);
+    let key = idSep[2] + idSep[3].charAt(0).toUpperCase() + idSep[3].slice(1);
     let temp = fieldData.map((field) => {
       if (field.fieldID === parseInt(idSep[idSep.length - 1])) {
         field[key] = e.currentTarget.value;
@@ -73,7 +73,7 @@ export default function FieldCard({ fieldList, ptclData, defaultActiveKey, value
                   <InputGroup size="sm" className="mb-2">
                     <InputGroup.Text className="eq-input-text">a</InputGroup.Text>
                     <FormControl className="text-center" type="number" aria-label="Small" defaultValue={currFieldData.genVal1} aria-describedby="inputGroup-sizing-sm"
-                      id={ptclData.particle.toLowerCase() + "-gen-val1-field-" + id}
+                      id={ptclData.particle + "-" + ptclData.ptclID + "-gen-val1-field-" + id}
                       onChange={handleValueChange}
                     />
                   </InputGroup>
@@ -83,7 +83,7 @@ export default function FieldCard({ fieldList, ptclData, defaultActiveKey, value
                   <InputGroup size="sm" className="mb-2">
                     <InputGroup.Text className="eq-input-text">b</InputGroup.Text>
                     <FormControl className="text-center" type="number" aria-label="Small" defaultValue={currFieldData.genVal2} aria-describedby="inputGroup-sizing-sm"
-                      id={ptclData.particle.toLowerCase() + "-gen-val2-field-" + id}
+                      id={ptclData.particle + "-" + ptclData.ptclID + "-gen-val2-field-" + id}
                       onChange={handleValueChange}
                     />
                   </InputGroup>
@@ -93,7 +93,7 @@ export default function FieldCard({ fieldList, ptclData, defaultActiveKey, value
                   <InputGroup size="sm" className="mb-2">
                     <InputGroup.Text className="eq-input-text">c</InputGroup.Text>
                     <FormControl className="text-center" type="number" ria-label="Small" defaultValue={currFieldData.genVal3} aria-describedby="inputGroup-sizing-sm"
-                      id={ptclData.particle.toLowerCase() + "-gen-val3-field-" + id}
+                      id={ptclData.particle + "-" + ptclData.ptclID + "-gen-val3-field-" + id}
                       onChange={handleValueChange}
                     />
                   </InputGroup>
@@ -103,7 +103,7 @@ export default function FieldCard({ fieldList, ptclData, defaultActiveKey, value
                   <InputGroup size="sm" className="mb-2">
                     <InputGroup.Text className="eq-input-text">d</InputGroup.Text>
                     <FormControl className="text-center" type="number" aria-label="Small" defaultValue={currFieldData.genVal4} aria-describedby="inputGroup-sizing-sm"
-                      id={ptclData.particle.toLowerCase() + "-gen-val4-field-" + id}
+                      id={ptclData.particle + "-" + ptclData.ptclID + "-gen-val4-field-" + id}
                       onChange={handleValueChange}
                     />
                   </InputGroup>
@@ -119,7 +119,7 @@ export default function FieldCard({ fieldList, ptclData, defaultActiveKey, value
 
               <InputGroup size="sm" >
                 <InputGroup.Text className="eq-input-text">A</InputGroup.Text>
-                <FormControl id={ptclData.particle.toLowerCase() + "-react-val1-field-" + id} className="text-center" type="number" aria-label="Small" defaultValue={currFieldData.reactVal1} aria-describedby="inputGroup-sizing-sm"
+                <FormControl id={ptclData.particle + "-" + ptclData.ptclID + "-react-val1-field-" + id} className="text-center" type="number" aria-label="Small" defaultValue={currFieldData.reactVal1} aria-describedby="inputGroup-sizing-sm"
                       onChange={handleValueChange}
                 />
               </InputGroup>
@@ -136,7 +136,7 @@ export default function FieldCard({ fieldList, ptclData, defaultActiveKey, value
   return (
     <Card border="secondary" style={{ width: 'auto' }} className="mb-3">
       <Card.Body>
-        <Card.Title className="text-center text-capitalize">{ptclData.particle + " Charge"}</Card.Title>
+        <Card.Title className="text-center text-capitalize">{ptclData.particle + " Charge " + ptclData.ptclID}</Card.Title>
 
         <Form>
 

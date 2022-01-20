@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
-import { InputGroup, FormControl, Form, Container, Row, Col, Card, Accordion, DropdownButton, Dropdown, Button } from 'react-bootstrap';
-import '../index.css';
+import { InputGroup, FormControl, Form, Container, Row, Col, Card, Accordion, Button } from 'react-bootstrap';
 import $ from 'jquery';
+
+import '../index.css';
+import Field from './Field'
 
 const eqs = ['q (a r^b + c)', 'a q log_b(cr + d)', 'a q v'];
 
@@ -10,11 +12,6 @@ export default function FieldCard({ fieldList, ptclData, defaultActiveKey, value
   const [fieldData, updateFD] = useState(ptclData.fieldData);
 
   const [index, updateIndex] = useState(0);
-
-  $("input.float-input").on('input', function() {
-    this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');
-  });
-
 
   const handleEq = (value) => {
     let temp = fieldData.slice();
@@ -28,17 +25,21 @@ export default function FieldCard({ fieldList, ptclData, defaultActiveKey, value
 
   const handleValueChange = (e) => {
     let idSep = e.currentTarget.id.split('-');
+    e.currentTarget.value = e.currentTarget.value.replace(/[^0-9.-]/g, '')
+      .replace(/(\..*?)\..*/g, '$1');
+    if (e.currentTarget.value === "") {
+      e.currentTarget.value = "0";
+    }
+    console.log(e.currentTarget.value)
     let key = idSep[2] + idSep[3].charAt(0).toUpperCase() + idSep[3].slice(1);
-    let temp = fieldData.map((field) => {
+    ptclData.fieldData = fieldData.map((field) => {
       if (field.fieldID === parseInt(idSep[idSep.length - 1])) {
         field[key] = e.currentTarget.value;
       }
       return field;
     })
-    ptclData.fieldData = temp;
     valueChangeCallback(ptclData);
   }
-
 
   let fieldAccordions = fieldList.map((field, idx) => {
     let id = field.fieldID;
@@ -58,81 +59,16 @@ export default function FieldCard({ fieldList, ptclData, defaultActiveKey, value
 
     if (!field.disabled) {
       return (
-        <Accordion.Item key={id} eventKey={id.toString()}>
-          <Accordion.Button className='h6 mb-0 text-capitalize' data-index={id - 1} onClick={handleToggle}>
-            {field.fieldName + ' Field'}
-          </Accordion.Button>
-          <Accordion.Body>
-            <DropdownButton className="mb-2 gen-dd"
-              title={'E = ' + eqs[fieldData[id - 1].currGenEq]}
-              onSelect={handleEq}
-            >
-              <Dropdown.Item eventKey={eqs[0]}>{'E = ' + eqs[0]}</Dropdown.Item>
-              <Dropdown.Item eventKey={eqs[1]}>{'E = ' + eqs[1]}</Dropdown.Item>
-              <Dropdown.Item eventKey={eqs[2]}>{'E = ' + eqs[2]}</Dropdown.Item>
-            </DropdownButton>
-
-            <Container className="m-0 p-0">
-              <Row>
-
-                <Col className="" md={6}>
-                  <InputGroup size="sm" className="mb-2">
-                    <InputGroup.Text className="eq-input-text">a</InputGroup.Text>
-                    <FormControl className="text-center float-input" type="number" aria-label="Small" defaultValue={currFieldData.genVal1} aria-describedby="inputGroup-sizing-sm"
-                      id={ptclData.particle + "-" + ptclData.ptclID + "-gen-val1-field-" + id}
-                      onChange={handleValueChange}
-                    />
-                  </InputGroup>
-                </Col>
-
-                <Col md={6}>
-                  <InputGroup size="sm" className="mb-2">
-                    <InputGroup.Text className="eq-input-text">b</InputGroup.Text>
-                    <FormControl className="text-center float-input" type="number" aria-label="Small" defaultValue={currFieldData.genVal2} aria-describedby="inputGroup-sizing-sm"
-                      id={ptclData.particle + "-" + ptclData.ptclID + "-gen-val2-field-" + id}
-                      onChange={handleValueChange}
-                    />
-                  </InputGroup>
-                </Col>
-
-                <Col md={6}>
-                  <InputGroup size="sm" className="mb-2">
-                    <InputGroup.Text className="eq-input-text">c</InputGroup.Text>
-                    <FormControl className="text-center float-input" type="number" ria-label="Small" defaultValue={currFieldData.genVal3} aria-describedby="inputGroup-sizing-sm"
-                      id={ptclData.particle + "-" + ptclData.ptclID + "-gen-val3-field-" + id}
-                      onChange={handleValueChange}
-                    />
-                  </InputGroup>
-                </Col>
-
-                <Col md={6}>
-                  <InputGroup size="sm" className="mb-2">
-                    <InputGroup.Text className="eq-input-text">d</InputGroup.Text>
-                    <FormControl className="text-center float-input" type="number" aria-label="Small" defaultValue={currFieldData.genVal4} aria-describedby="inputGroup-sizing-sm"
-                      id={ptclData.particle + "-" + ptclData.ptclID + "-gen-val4-field-" + id}
-                      onChange={handleValueChange}
-                    />
-                  </InputGroup>
-                </Col>
-
-              </Row>
-            </Container>
-
-            <DropdownButton className="mb-2 react-dd" title={'F = A q E'}>
-              <Dropdown.Item eventKey={'A q E'}>{'F = A q E'}</Dropdown.Item>
-            </DropdownButton>
-            <Container className="m-0 p-0">
-
-              <InputGroup size="sm" >
-                <InputGroup.Text className="eq-input-text">A</InputGroup.Text>
-                <FormControl id={ptclData.particle + "-" + ptclData.ptclID + "-react-val1-field-" + id} className="text-center float-input" type="number" aria-label="Small" defaultValue={currFieldData.reactVal1} aria-describedby="inputGroup-sizing-sm"
-                      onChange={handleValueChange}
-                />
-              </InputGroup>
-
-            </Container>
-          </Accordion.Body>
-        </Accordion.Item>
+        <Field
+          key={id}
+          fieldID={id}
+          fieldName={field.fieldName}
+          ptclData={ptclData}
+          currFieldData={currFieldData}
+          handleToggleCallback={handleToggle}
+          handleEqCallback={handleEq}
+          fieldValueCallback={handleValueChange}
+        />
       )
     }
     return (<React.Fragment key={id}></React.Fragment>)
@@ -159,8 +95,14 @@ export default function FieldCard({ fieldList, ptclData, defaultActiveKey, value
                       id={ptclData.particle + "-" + ptclData.ptclID + "mag"}
                       aria-label="Example text with button addon"
                       aria-describedby="basic-addon1"
+                      type="text"
+                      inputMode="numeric"
                       defaultValue={ptclData.mag}
                       onChange={(e) => {
+                        e.currentTarget.value = e.currentTarget.value.replace(/[^0-9.-]/g, '').replace(/(\..*?)\..*/g, '$1');
+                        if (e.currentTarget.value === "") {
+                          e.currentTarget.value = "0";
+                        }
                         ptclData.mag = e.currentTarget.value;
                         valueChangeCallback(ptclData);
                       }}

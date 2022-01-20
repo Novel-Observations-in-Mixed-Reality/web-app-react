@@ -1,7 +1,7 @@
 import '../App.css';
 import React, { useState } from 'react';
 import { Form, Button, ButtonGroup, InputGroup, FormControl, ToggleButton } from 'react-bootstrap';
-import $, { Callbacks } from 'jquery';
+import $ from 'jquery';
 
 export default function Customization({ fieldList, cardCallBack, fieldAddCallback, fieldCheckCallback }) {
 

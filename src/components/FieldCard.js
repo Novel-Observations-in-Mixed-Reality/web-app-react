@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { InputGroup, FormControl, Form, Container, Row, Col, Card, Accordion, DropdownButton, Dropdown, Button } from 'react-bootstrap';
 import '../index.css';
+import $ from 'jquery';
 
 const eqs = ['q (a r^b + c)', 'a q log_b(cr + d)', 'a q v'];
 
@@ -9,6 +10,11 @@ export default function FieldCard({ fieldList, ptclData, defaultActiveKey, value
   const [fieldData, updateFD] = useState(ptclData.fieldData);
 
   const [index, updateIndex] = useState(0);
+
+  $("input.float-input").on('input', function() {
+    this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');
+  });
+
 
   const handleEq = (value) => {
     let temp = fieldData.slice();
@@ -72,7 +78,7 @@ export default function FieldCard({ fieldList, ptclData, defaultActiveKey, value
                 <Col className="" md={6}>
                   <InputGroup size="sm" className="mb-2">
                     <InputGroup.Text className="eq-input-text">a</InputGroup.Text>
-                    <FormControl className="text-center" type="number" aria-label="Small" defaultValue={currFieldData.genVal1} aria-describedby="inputGroup-sizing-sm"
+                    <FormControl className="text-center float-input" type="number" aria-label="Small" defaultValue={currFieldData.genVal1} aria-describedby="inputGroup-sizing-sm"
                       id={ptclData.particle + "-" + ptclData.ptclID + "-gen-val1-field-" + id}
                       onChange={handleValueChange}
                     />
@@ -82,7 +88,7 @@ export default function FieldCard({ fieldList, ptclData, defaultActiveKey, value
                 <Col md={6}>
                   <InputGroup size="sm" className="mb-2">
                     <InputGroup.Text className="eq-input-text">b</InputGroup.Text>
-                    <FormControl className="text-center" type="number" aria-label="Small" defaultValue={currFieldData.genVal2} aria-describedby="inputGroup-sizing-sm"
+                    <FormControl className="text-center float-input" type="number" aria-label="Small" defaultValue={currFieldData.genVal2} aria-describedby="inputGroup-sizing-sm"
                       id={ptclData.particle + "-" + ptclData.ptclID + "-gen-val2-field-" + id}
                       onChange={handleValueChange}
                     />
@@ -92,7 +98,7 @@ export default function FieldCard({ fieldList, ptclData, defaultActiveKey, value
                 <Col md={6}>
                   <InputGroup size="sm" className="mb-2">
                     <InputGroup.Text className="eq-input-text">c</InputGroup.Text>
-                    <FormControl className="text-center" type="number" ria-label="Small" defaultValue={currFieldData.genVal3} aria-describedby="inputGroup-sizing-sm"
+                    <FormControl className="text-center float-input" type="number" ria-label="Small" defaultValue={currFieldData.genVal3} aria-describedby="inputGroup-sizing-sm"
                       id={ptclData.particle + "-" + ptclData.ptclID + "-gen-val3-field-" + id}
                       onChange={handleValueChange}
                     />
@@ -102,7 +108,7 @@ export default function FieldCard({ fieldList, ptclData, defaultActiveKey, value
                 <Col md={6}>
                   <InputGroup size="sm" className="mb-2">
                     <InputGroup.Text className="eq-input-text">d</InputGroup.Text>
-                    <FormControl className="text-center" type="number" aria-label="Small" defaultValue={currFieldData.genVal4} aria-describedby="inputGroup-sizing-sm"
+                    <FormControl className="text-center float-input" type="number" aria-label="Small" defaultValue={currFieldData.genVal4} aria-describedby="inputGroup-sizing-sm"
                       id={ptclData.particle + "-" + ptclData.ptclID + "-gen-val4-field-" + id}
                       onChange={handleValueChange}
                     />
@@ -119,7 +125,7 @@ export default function FieldCard({ fieldList, ptclData, defaultActiveKey, value
 
               <InputGroup size="sm" >
                 <InputGroup.Text className="eq-input-text">A</InputGroup.Text>
-                <FormControl id={ptclData.particle + "-" + ptclData.ptclID + "-react-val1-field-" + id} className="text-center" type="number" aria-label="Small" defaultValue={currFieldData.reactVal1} aria-describedby="inputGroup-sizing-sm"
+                <FormControl id={ptclData.particle + "-" + ptclData.ptclID + "-react-val1-field-" + id} className="text-center float-input" type="number" aria-label="Small" defaultValue={currFieldData.reactVal1} aria-describedby="inputGroup-sizing-sm"
                       onChange={handleValueChange}
                 />
               </InputGroup>
@@ -147,9 +153,10 @@ export default function FieldCard({ fieldList, ptclData, defaultActiveKey, value
               <Col md={7} lg={7}>
                 <div>
                   <InputGroup id="magnitude" className="mb-3 col-md-5">
-                    <Button variant="outline-secondary" id="button-addon1">-</Button>
+                    <Button variant="outline-secondary" id="button-addon1" onClick={e => console.log(typeof $("#" + ptclData.particle + "-" + ptclData.ptclID + "mag").val())}>-</Button>
                     <FormControl
-                      className="text-center"
+                      className="text-center float-input"
+                      id={ptclData.particle + "-" + ptclData.ptclID + "mag"}
                       aria-label="Example text with button addon"
                       aria-describedby="basic-addon1"
                       defaultValue={ptclData.mag}
@@ -158,7 +165,7 @@ export default function FieldCard({ fieldList, ptclData, defaultActiveKey, value
                         valueChangeCallback(ptclData);
                       }}
                     />
-                    <Button variant="outline-secondary" id="button-addon1">+</Button>
+                    <Button variant="outline-secondary" id="button-addon1" onClick={e => console.log($("#" + ptclData.particle + "-" + ptclData.ptclID + "mag").val())}>+</Button>
                   </InputGroup>
                 </div>
 
